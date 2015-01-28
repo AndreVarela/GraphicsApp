@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name moneyGraphicsAppApp.controller:AboutCtrl
+ * @name moneyGraphicsAppApp.controller:D3graphicsCtrl
  * @description
- * # AboutCtrl
+ * # D3graphicsCtrl
  * Controller of the moneyGraphicsAppApp
  */
 angular.module('moneyGraphicsAppApp')
-  .controller('AboutCtrl', function ($scope) {
+  .controller('D3graphicsCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

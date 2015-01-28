@@ -25,8 +25,9 @@
       <div class="header">
         <ul class="nav nav-pills pull-right">
           <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
+          <li><a ng-href="#/D3RadialProgressGraphics">Gráfico Donut</a></li>
+          <li><a ng-href="#/D3Graphics">Gráfico Linhas</a></li>
+          <li><a ng-href="#/TestWebApi">Web API</a></li>
         </ul>
         <h3 class="text-muted">moneyGraphicsApp</h3>
       </div>
@@ -68,13 +69,21 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/d3graphics.js"></script>
+        <script src="scripts/services/d3graphicsservice.js"></script>
+        <script src="scripts/directives/simplelinechart.js"></script>
+        <script src="scripts/controllers/d3radialprogressgraphics.js"></script>
+        <script src="scripts/directives/radialprogresschart.js"></script>
+        <script src="scripts/services/webapiservice.js"></script>
+
+        <script src="scripts/controllers/testwebapi.js"></script>
         <!-- endbuild -->
 </body>
 </html>

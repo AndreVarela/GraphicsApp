@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'd3'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -30,6 +31,18 @@ angular
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
+      })
+      .when('/D3Graphics', {
+        templateUrl: 'views/d3graphics.html',
+        controller: 'D3graphicsCtrl'
+      })
+      .when('/D3RadialProgressGraphics', {
+        templateUrl: 'views/d3radialprogressgraphics.html',
+        controller: 'D3radialprogressgraphicsCtrl'
+      })
+      .when('/TestWebApi', {
+        templateUrl: 'views/testwebapi.html',
+        controller: 'TestWebApiCtrl'
       })
       .otherwise({
         redirectTo: '/'
