@@ -16,35 +16,80 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'd3'
+    'restangular',
   ])
-  .config(function ($routeProvider) {
+
+  .factory('myHttpInterceptor', function($rootScope, $location) {
+    return {
+      'request': function(config) {
+        $rootScope.loading = true;
+        return config || $q.when(config);
+      },
+
+      'response': function(response) {
+        $rootScope.loading = false;
+        return response || $q.when(response);
+      },
+
+      'responseError': function(rejection) {
+        $rootScope.loading = false;
+
+        if(rejection.status === 500 || rejection.status === 406)
+        {
+          alert(rejection.data);
+          return $q.reject(rejection);
+        }
+
+        if(rejection.status === 401 || rejection.status === 0)      
+        {
+          $location.path('/login');
+          return $q.reject(rejection);
+        }
+
+        return $q.reject(rejection);
+      }
+    };
+})
+  .config(function ($routeProvider, $httpProvider,RestangularProvider) {
+    RestangularProvider.setBaseUrl('http://localhost:30954/');
+    $httpProvider.interceptors.push('myHttpInterceptor');
+
     $routeProvider
-      .when('/', {
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
+      })
+
+      .when('/Homepage', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .when('/D3Graphics', {
-        templateUrl: 'views/d3graphics.html',
-        controller: 'D3graphicsCtrl'
-      })
-      .when('/D3RadialProgressGraphics', {
-        templateUrl: 'views/d3radialprogressgraphics.html',
-        controller: 'D3radialprogressgraphicsCtrl'
-      })
-      .when('/TestWebApi', {
-        templateUrl: 'views/testwebapi.html',
-        controller: 'TestWebApiCtrl'
+        controller: 'MainCtrl',
+        resolve: {
+            graphics: function(Restangular){
+                return Restangular.one('values').get().then(function (data) {
+                    return data;
+                }, function (data, status, headers, config, statusText) {
+                    return data;
+                });
+            },
+            emails: function(Restangular){
+              return Restangular.one('email').get().then(function (data) {
+                    return data;
+                }, function (data, status, headers, config, statusText) {
+                    return data;
+                });
+            },
+            plafound: function(Restangular){
+              return Restangular.one('plafound').get().then(function (data) {
+                    return data;
+                }, function (data, status, headers, config, statusText) {
+                    return data;
+                });
+            }
+        },
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/login'
       });
-  });
+  })
+  
+  

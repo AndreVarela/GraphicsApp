@@ -10,23 +10,56 @@
  angular.module('moneyGraphicsAppApp')
  .service('WebApiService', function ($http, $q) {
 
- 	return {
- 		getData: function() { 
+    // -> /api/values em produção
+ 	// -> http://localhost:30954/values em dev
+ 	//Actualizar no restangular tambem -> app.js
+ 	var getURLServer = 'http://localhost:30954/'
 
- 			var deferred = $q.defer();
+ 	return {
+ 		getURLServer : getURLServer,
+ 		
+	  	updateEmails: function(emails)
+	  	{
+	  		var deferred = $q.defer();
  			
- 			// -> /api/values em produção
- 			// -> http://localhost:30954/values em dev
- 			$http.get('http://localhost:30954/values')
-			.success(function(data, status, config, headers){
- 				deferred.resolve(data);;
- 			})
-	        .error(function(data, status, headers, config, statusText){ //handler errors here
-	      	    deferred.reject('Rejected');
-	        });
+ 			$http.post(getURLServer+'email', emails)
+				.success(function(data, status, config, headers){
+ 					deferred.resolve(data);
+ 				})
+	        	.error(function(data, status, headers, config, statusText){
+	      	    	deferred.reject(data, status, headers);
+	        	});
 
 	        return deferred.promise;
-	  }
+	  	},
+	  	addPlafounds: function(plafound)
+	  	{
+	  		var deferred = $q.defer();
+ 			
+ 			$http.post(getURLServer+'plafound', plafound)
+				.success(function(data, status, config, headers){
+ 					deferred.resolve(data);
+ 				})
+	        	.error(function(data, status, headers, config, statusText){
+	      	    	deferred.reject(data, status, headers);
+	        	});
+
+	        return deferred.promise;
+	  	},
+	  	getReport: function()
+	  	{
+	  		var deferred = $q.defer();
+ 			
+ 			$http.get(getURLServer+'getReport', null, { responseType: 'arraybuffer' })
+				.success(function(data, status, config, headers){
+ 					deferred.resolve(data);
+ 				})
+	        	.error(function(data, status, headers, config, statusText){
+	      	    	deferred.reject(data, status, headers);
+	        	});
+
+	        return deferred.promise;
+	  	}
 	};
 });
 

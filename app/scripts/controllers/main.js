@@ -7,11 +7,116 @@
  * # MainCtrl
  * Controller of the moneyGraphicsAppApp
  */
-angular.module('moneyGraphicsAppApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+ angular.module('moneyGraphicsAppApp')
+ .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location, graphics, emails, plafound) {
+ 	$scope.userName = sessionStorage.getItem('userName');
+ 	$scope.role = sessionStorage.getItem('role');
+
+ 	/* Graphics */
+ 	
+	$timeout(function() {
+		var scopeGraphicsCtrl = $scope.$new();
+ 		$controller('GraphicsCtrl',{$scope : scopeGraphicsCtrl });
+	 	scopeGraphicsCtrl.MakeGraphics(graphics);
+
+	 	$scope.totalAmountBNA = graphics.radialProgress.totalMoneyBNA;
+		$scope.sobraAmountBNA = graphics.radialProgress.sobraMoneyBNA;
+		$scope.totalAmountEMIS = graphics.radialProgress.totalMoneyBNA;
+		$scope.sobraAmountEMIS = graphics.radialProgress.sobraMoneyEMIS;
+	 });
+
+ 	/* Fim de Graphics */
+
+ 	/* Administração */
+ 	$scope.emails = emails;
+
+ 	$scope.addEmail = function(email){
+
+ 		if(email !== undefined && email.email !== null)
+ 		{
+ 			$scope.emails.push({email: email.email, active: true});
+ 			email.email = null;
+ 			email.active = null;
+ 		}
+
+ 		$timeout(function() {
+ 			$('#EmailAdmin').focus();
+ 		});
+ 	};
+
+ 	$scope.removeFromEmailList = function(item, list){
+ 		var index = list.indexOf(item);
+ 		if (index > -1) {
+ 			list.splice(index, 1);
+ 		}
+ 	};
+
+ 	$scope.saveEmails = function(){
+ 		WebApiService.updateEmails($scope.emails).then(function(){
+	    	alert('Emails gravados com sucesso.');
+	  	});
+ 	};
+
+
+ 	$scope.cancel = function(){
+ 		window.history.back();
+ 	};
+
+ 	$scope.plafound = {bna : 0, emis: 0}
+ 	if(plafound !== undefined && plafound !== null){
+ 		$scope.plafound.bna = plafound.bNA;
+ 		$scope.plafound.emis = plafound.eMIS;
+ 	}
+
+ 	$scope.addPlafounds = function(plafound){
+
+ 		if(plafound !== undefined && plafound.bna !== null && plafound.bna !== undefined && plafound.emis !== null && plafound.emis !== undefined)
+ 		{
+			WebApiService.addPlafounds(plafound).then(function(){
+		    	alert('Plafounds alterados com sucesso.');
+		  	});
+		}
+		else
+		{
+			alert('Introduza apenas valores numéricos.')			
+		}
+ 	}
+
+ 	/* Fim de Administração */
+
+ 	/* Reports */
+
+ 	$scope.DownloadFile = function()
+ 	{
+		WebApiService.getReport().then(function(data){
+			var file = new Blob([data], { type: 'application/pdf' });
+            var fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+		});
+ 	}
+
+ 	/* Fim dos Reports */
+
+ 	/* Logout */
+
+ 	$scope.logout = function()
+	{
+	  UserService.logout().then(function(){
+	    $location.path('/login');
+	  });
+	};
+
+ 	/* Fim de Logout */
+
+ 	/*Funcoes Auxiliares*/
+
+ 	$scope.actualDate = function() {
+ 	 	var d = new Date();
+   		var yyyy = d.getFullYear().toString();
+   		var mm = (d.getMonth()+1).toString(); // getMonth() is zero-based
+   		var dd  = d.getDate().toString();
+   		return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]); // padding
+  	};
+
+ 	/* Fim das funcoes auxiliares */
+ });

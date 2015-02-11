@@ -1,0 +1,10 @@
+Correções
+
+->Quando cai no erro de cima o gajo aprensenta montes de mensagens na consola da aplicação. Arranjar um meio de travar isso.
+Linha return $q.reject(rejection); no app.js
+
+-> Substituir os alerts por div's comom deve de ser.
+
+-> permissões nos tabs
+
+-> Login com Equation
