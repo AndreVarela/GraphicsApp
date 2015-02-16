@@ -17,6 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'restangular',
+    'ui.date'
   ])
 
   .factory('myHttpInterceptor', function($rootScope, $location) {
@@ -36,16 +37,19 @@ angular
 
         if(rejection.status === 500 || rejection.status === 406)
         {
+          console.log(rejection);
           alert(rejection.data);
           return $q.reject(rejection);
         }
 
         if(rejection.status === 401 || rejection.status === 0)      
         {
+          console.log(rejection);
           $location.path('/login');
           return $q.reject(rejection);
         }
 
+        console.log(rejection);
         return $q.reject(rejection);
       }
     };

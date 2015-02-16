@@ -1,10 +1,31 @@
 Correções
 
+-> Colocar data numa directiva
+
 ->Quando cai no erro de cima o gajo aprensenta montes de mensagens na consola da aplicação. Arranjar um meio de travar isso.
-Linha return $q.reject(rejection); no app.js
+Linha return $q.reject(rejection); no app.js 
 
 -> Substituir os alerts por div's comom deve de ser.
 
--> permissões nos tabs
+-> Bloquear app se correr mal
 
--> Login com Equation
+-> =< 15% -> Email ( Mário )
+
+
+
+
+
+
+-> Problema no login...n percebo
+Da um SqlException sempre que inicializo o servidor...Da um erro mas deixa-me entrar :S
+Tempo Limite da Ligação Expirado. O tempo limite esgotou-se durante a fase posterior ao início de sessão. A ligação pode ter excedido o tempo limite ao aguardar que o servidor concluísse o processo de início de sessão e respondesse ou ao tentar criar múltiplas ligações ativas.  O tempo gasto a tentar ligar a este servidor foi - [Pré-início de sessão] inicialização=9; handshake=83; [Início de sessão] inicialização=17; autenticação=0; [Pós-
+
+
+-> Login com Equation 
+
+
+
+
+
+
+

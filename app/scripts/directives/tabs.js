@@ -48,16 +48,18 @@
     require: '^tabs',
     restrict: 'E',
     transclude: true,
-    scope: { title: '@', show:'=', permission: '@' },
-    link: function(scope, element, attrs, tabsCtrl) {
-      var permission = attrs.permission || '';
-      var hasPermission = function(permission){
-        var permissions = JSON.parse(sessionStorage.getItem('permissions'));
+    scope: { title: '@', show:'=', permission: '@', tabName:'@' },
+    link: function(scope, element, attrs, tabsCtrl, UserService) {
 
-        console.log(permission,permissions);
-        return _.contains(permissions, permission);
+      var hasPermission = function(permission){
+        if(sessionStorage.getItem('permissions') !== undefined){
+          var permissions = JSON.parse(sessionStorage.getItem('permissions'));
+          return _.some(permissions, function(perm){ return perm.permission === permission && perm.hasPermission === true;});
+        }
+        return false;
       };
-      if(permission === '' || hasPermission(permission)){
+
+      if(hasPermission(scope.tabName)){
         tabsCtrl.addPane(scope);
       }
     },

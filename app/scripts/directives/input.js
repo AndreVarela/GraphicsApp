@@ -35,7 +35,7 @@
 		template:
 		'<div class="form-group">' +
 		'<label>{{label}}</label>' +
-		'<input ng-disabled={{ngDisabled}} type="text" id="{{controlId}}" class="form-control input-sm" ng-model="model" placeholder="{{placeholder}}">' +
+		'<input ng-disabled={{ngDisabled}} type="text" id="{{controlId}}" class="form-control input-sm" ng-model="model" placeholder="{{placeholder}}"/>' +
 		'</div>'
 	};
 })
@@ -52,7 +52,7 @@
 		template:
 		'<div class="form-group">' +
 		'<label>{{label}}</label>' +
-		'<input ng-disabled={{ngDisabled}} type="email" id="{{controlId}}" class="form-control input-sm" ng-model="model" placeholder="{{placeholder}}">' +
+		'<input ng-disabled={{ngDisabled}} type="email" id="{{controlId}}" class="form-control input-sm" ng-model="model" placeholder="{{placeholder}}"/>' +
 		'</div>'
 	};
 })
@@ -69,7 +69,7 @@
 		template:
 		'<div class="form-group">' +
 		'<label>{{label}}</label>' +
-		'<input ng-disabled={{ngDisabled}} type="text" id="{{controlId}}" class="form-control input-sm" ng-model="model" placeholder="{{placeholder}}" valid-number>' +
+		'<input ng-disabled={{ngDisabled}} type="text" id="{{controlId}}" class="form-control input-sm" ng-model="model" placeholder="{{placeholder}}" valid-number />' +
 		'</div>'
 	};
 })
@@ -108,5 +108,4 @@
         }
       };
 })
-
 

@@ -10,8 +10,8 @@
  angular.module('moneyGraphicsAppApp')
  .service('WebApiService', function ($http, $q) {
 
-    // -> /api/values em produção
- 	// -> http://localhost:30954/values em dev
+    // -> /api/ em produção
+ 	// -> http://localhost:30954/ em dev
  	//Actualizar no restangular tambem -> app.js
  	var getURLServer = 'http://localhost:30954/'
 
@@ -46,11 +46,11 @@
 
 	        return deferred.promise;
 	  	},
-	  	getReport: function()
+	  	getReport: function(report)
 	  	{
 	  		var deferred = $q.defer();
  			
- 			$http.get(getURLServer+'getReport', null, { responseType: 'arraybuffer' })
+ 			$http.post(getURLServer +'report', report, { responseType: 'arraybuffer' })
 				.success(function(data, status, config, headers){
  					deferred.resolve(data);
  				})

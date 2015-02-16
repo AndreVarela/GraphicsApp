@@ -25,15 +25,7 @@ angular.module('moneyGraphicsAppApp')
         return d.promise;
     };
 
-    var hasPermission = function(permission){
-      if(sessionStorage.getItem('permissions') !== undefined){
-        var permissions = JSON.parse(sessionStorage.getItem('permissions'));
-        return _.contains(permissions, permission);
-      }
-      return true;
-    };
-
-  	var logout = function()
+    var logout = function()
     {
         var d = $q.defer();
         $http.delete(WebApiService.getURLServer + 'login')
@@ -53,7 +45,6 @@ angular.module('moneyGraphicsAppApp')
 
     return {
       autenticate: autenticate,
-      hasPermission: hasPermission,
       logout: logout
     };
 

@@ -8,7 +8,7 @@
  * Controller of the moneyGraphicsAppApp
  */
  angular.module('moneyGraphicsAppApp')
- .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location, graphics, emails, plafound) {
+ .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location, graphics, emails, plafound,$sce) {
  	$scope.userName = sessionStorage.getItem('userName');
  	$scope.role = sessionStorage.getItem('role');
 
@@ -86,14 +86,31 @@
 
  	/* Reports */
 
- 	$scope.DownloadFile = function()
+ 	$scope.report = {dates:{},money:{}};
+
+ 	$scope.DownloadFile = function(typeFile, extensionFile)
  	{
-		WebApiService.getReport().then(function(data){
-			var file = new Blob([data], { type: 'application/pdf' });
-            var fileURL = URL.createObjectURL(file);
-            window.open(fileURL);
+ 		$scope.report.typeFile = typeFile;
+ 		$scope.report.extensionFile = extensionFile;
+
+		WebApiService.getReport($scope.report).then(function(data){
+			if(data.byteLength === 0)
+			{
+				alert('Não foram retornados resultados.');
+			}
+			else
+			{
+				var file = new Blob([data], { type: 'text/plain;charset=utf-8' });
+            	saveAs(file, 'relatorioMovimentos_'+ $scope.actualDateAndTime() + '.'+ $scope.report.extensionFile);
+        	}
 		});
- 	}
+ 	};
+
+ 	$scope.dateOptions = {
+        changeYear: true,
+        changeMonth: true,
+        dateFormat: 'yy-mm-dd'
+    };
 
  	/* Fim dos Reports */
 
@@ -116,6 +133,18 @@
    		var mm = (d.getMonth()+1).toString(); // getMonth() is zero-based
    		var dd  = d.getDate().toString();
    		return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]); // padding
+  	};
+
+  	$scope.actualDateAndTime = function() {
+ 	 	var d = new Date();
+   		var yyyy = d.getFullYear().toString();
+   		var mm = (d.getMonth()+1).toString(); // getMonth() is zero-based
+   		var dd  = d.getDate().toString();
+   		var seconds = d.getSeconds().toString();
+		var minutes = d.getMinutes().toString();
+		var hour = d.getHours().toString();
+   		return yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]) + '_' + (hour[1]?hour:"0"+hour[0]) + (minutes[1]?minutes:"0"+minutes[0]) + 
+			(seconds[1]?seconds:"0"+seconds[0]);
   	};
 
  	/* Fim das funcoes auxiliares */
