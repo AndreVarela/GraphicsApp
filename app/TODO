@@ -14,8 +14,7 @@ Dependentes de terceiros
 
 Correções Não prioritárias
 
-	->Quando cai no erro de cima o gajo aprensenta montes de mensagens na consola da aplicação. Arranjar um meio de travar isso.
-	->Linha return $q.reject(rejection); no app.js 
+	->Quando cai no erro de cima o gajo aprensenta montes de mensagens na consola da aplicação. Arranjar um meio de travar isso. Linha return $q.reject(rejection); no app.js 
 
 
 
