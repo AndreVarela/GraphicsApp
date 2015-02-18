@@ -106,12 +106,6 @@
 		});
  	};
 
- 	$scope.dateOptions = {
-        changeYear: true,
-        changeMonth: true,
-        dateFormat: 'yy-mm-dd'
-    };
-
  	/* Fim dos Reports */
 
  	/* Logout */

@@ -56,6 +56,29 @@
 		'</div>'
 	};
 })
+.directive('datebox', function () {
+	return {
+		restrict: 'E',
+		scope: {
+			label: '@',
+			placeholder: '@',
+			model: '='
+			},
+		link: function(scope, element, attrs) {
+			scope.dateOptions = {
+		        changeYear: true,
+		        changeMonth: true,
+		        dateFormat: 'yy-mm-dd'
+	    	};
+    	},
+		template:
+		'<div class="form-group">' +
+		'<label>{{label}}</label>' +
+		'<input placeholder={{placeholder}} class="form-control input-sm" ui-date="dateOptions" ng-model="model"' +
+		' ui-date-format="yy-mm-dd"/>' +
+		'</div>'
+	};
+})
 .directive('moneybox', function () {
 	return {
 		restrict: 'E',
