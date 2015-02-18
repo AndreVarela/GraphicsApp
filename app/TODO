@@ -1,27 +1,35 @@
-Correções
+Dependentes de terceiros
 
--> Colocar data numa directiva
+	-> =< 15% -> Email ( Mário ) -> Preciso de :
+	//<add key="HostEmail" value="csmail.bpc.intranet" />
+    //<add key="UsernameNetworkCredentialEmail" value="sgc_integracao2@bpc.ao" />
+    //<add key="PasswordNetworkCredentialEmail" value="Scint.009" />
 
-->Quando cai no erro de cima o gajo aprensenta montes de mensagens na consola da aplicação. Arranjar um meio de travar isso.
-Linha return $q.reject(rejection); no app.js 
-
--> Substituir os alerts por div's comom deve de ser.
-
--> Bloquear app se correr mal
-
--> =< 15% -> Email ( Mário )
+    Preciso de testar isto...por causa das percentagens que os graficos me dão, e pode nem haver valores para os graficos...Depende de como tiver o código dos graficos feito. Rever essa parte.
 
 
 
 
 
 
--> Problema no login...n percebo
-Da um SqlException sempre que inicializo o servidor...Da um erro mas deixa-me entrar :S
-Tempo Limite da Ligação Expirado. O tempo limite esgotou-se durante a fase posterior ao início de sessão. A ligação pode ter excedido o tempo limite ao aguardar que o servidor concluísse o processo de início de sessão e respondesse ou ao tentar criar múltiplas ligações ativas.  O tempo gasto a tentar ligar a este servidor foi - [Pré-início de sessão] inicialização=9; handshake=83; [Início de sessão] inicialização=17; autenticação=0; [Pós-
+Correções Não prioritárias
+
+	->Quando cai no erro de cima o gajo aprensenta montes de mensagens na consola da aplicação. Arranjar um meio de travar isso.
+	->Linha return $q.reject(rejection); no app.js 
 
 
--> Login com Equation 
+
+
+Correções prioritárias
+
+
+	-> Problema no login...n percebo
+	Da um SqlException sempre que inicializo o servidor...Da um erro mas deixa-me entrar :S
+	Tempo Limite da Ligação Expirado. O tempo limite esgotou-se durante a fase posterior ao início de sessão. A ligação pode ter excedido o tempo limite ao aguardar que o servidor concluísse o processo de início de sessão e respondesse ou ao tentar criar múltiplas ligações ativas.  O tempo gasto a tentar ligar a este servidor foi - [Pré-início de sessão] inicialização=9; handshake=83; [Início de sessão] inicialização=17; autenticação=0; [Pós-
+
+	-> Bloquear app se correr mal
+
+
 
 
 
