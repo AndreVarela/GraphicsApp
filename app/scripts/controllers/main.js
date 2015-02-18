@@ -8,7 +8,11 @@
  * Controller of the moneyGraphicsAppApp
  */
  angular.module('moneyGraphicsAppApp')
- .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location, graphics, emails, plafound,$sce) {
+ .constant('settings', {
+  categoryMoney: 'Tipo Moeda',
+  categoryMessage: 'Tipo Mensagem',
+})
+ .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location, graphics, emails, plafound,$sce, codeDecodes, settings) {
  	$scope.userName = sessionStorage.getItem('userName');
  	$scope.role = sessionStorage.getItem('role');
 
@@ -87,6 +91,32 @@
  	/* Reports */
 
  	$scope.report = {dates:{},money:{}};
+ 	$scope.codeDecodes = {messageType:{}, moneyType:{}}
+
+ 	$scope.mapCodeDecodes = function()
+ 	{
+ 		$scope.codeDecodes.messageType = _.filter(codeDecodes, function(code){
+ 		 	if(code.category === settings.categoryMessage)
+ 		 	{
+ 		 		return code; 
+ 		 	}
+ 		});
+
+ 		$scope.codeDecodes.messageType = _.map($scope.codeDecodes.messageType, function(code){
+ 			return {code: code.code, shortDescription: code.code}
+ 		});
+ 		
+ 		$scope.codeDecodes.moneyType = _.filter(codeDecodes, function(code){
+ 		 	if(code.category === settings.categoryMoney)
+ 		 	{
+ 		 		return code; 
+ 		 	}
+ 		});
+
+ 		$scope.codeDecodes.moneyType = _.map($scope.codeDecodes.moneyType, function(code){
+ 			return {code: code.code, shortDescription: code.code}
+ 		});
+ 	}
 
  	$scope.DownloadFile = function(typeFile, extensionFile)
  	{
@@ -105,6 +135,8 @@
         	}
 		});
  	};
+
+ 	$scope.mapCodeDecodes();
 
  	/* Fim dos Reports */
 

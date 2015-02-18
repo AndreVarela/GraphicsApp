@@ -131,4 +131,35 @@
         }
       };
 })
+.directive('dropdown', function () {
+  return {
+    restrict: 'E',
+    scope: {
+      label:'@',
+      placeholder: '@',
+      model: '=',
+      items:'=',
+    },
+    template:
+    '<div class="form-group">' +
+	  '<label style="color:#333">{{label}}</label>' +
+    '<select ng-model="model" style="width: 100%;" class="form-control input-sm"' +
+    ' ng-options="c.code as c.shortDescription for c in items ">' +
+    '<option value="" style="color: #999;" class="clickable">{{placeholder}}</option>' +
+    '</select>'+
+    '</div>',
+    link: function(scope, elm, attrs) {
+      scope.$watch('model', function(nVal) {
+       var current = elm.val();
+       if (current !== '') {
+         elm.css('color','black');
+       } else {
+         elm.css('color','#999 !important;');
+       }
+
+     });
+    },
+  replace: true
+};
+})
 

@@ -88,6 +88,13 @@ angular
                 }, function (data, status, headers, config, statusText) {
                     return data;
                 });
+            },
+            codeDecodes: function(Restangular){
+              return Restangular.one('codedecode').get().then(function (data) {
+                    return data;
+                }, function (data, status, headers, config, statusText) {
+                    return data;
+                });
             }
         },
       })
