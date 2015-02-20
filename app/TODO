@@ -1,3 +1,7 @@
+Fazer no Futuro
+	-> DesBloquear app
+
+
 Dependentes de terceiros
 
 	-> =< 15% -> Email ( Mário ) -> Preciso de :
@@ -6,10 +10,6 @@ Dependentes de terceiros
     //<add key="PasswordNetworkCredentialEmail" value="Scint.009" />
 
     Preciso de testar isto...por causa das percentagens que os graficos me dão, e pode nem haver valores para os graficos...Depende de como tiver o código dos graficos feito. Rever essa parte.
-
-
-
-
 
 
 Correções Não prioritárias
@@ -22,12 +22,18 @@ Correções Não prioritárias
 
 
 
-
 Correções prioritárias
 
-	-> Bloquear app se correr mal
-
 	-> placeholder das drops ficar cinzento
+
+	-> Graficos
+		-> Descobrir o network ACK
+		-> retornar so o DOP_984724832 da agencia.
+
+	
+
+
+
 
 
 
