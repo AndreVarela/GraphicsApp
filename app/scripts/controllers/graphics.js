@@ -8,7 +8,7 @@
  * Controller of the moneyGraphicsAppApp
  */
 angular.module('moneyGraphicsAppApp')
-  .controller('GraphicsCtrl', function ($scope, WebApiService, $interval) {
+  .controller('GraphicsCtrl', function ($scope, WebApiService, $interval, Restangular) {
     $scope.startProcess = function startProcess(data)
 	{
 		$scope.start(data.radialProgress.counterBNA, data.radialProgress.counterEMIS); 
@@ -260,13 +260,13 @@ angular.module('moneyGraphicsAppApp')
 
 
 		/* Início Código Bar Chart */
-		var insideDivHeightBy = insideDivHeight/7, insideDivWidthBy = insideDivWidth/7;
+		var insideDivHeightBy = insideDivHeight/7;
 
 		var margin = {
 			top: insideDivHeightBy,
 			bottom: insideDivHeightBy,
-			right: insideDivWidthBy,
-			left: insideDivWidthBy
+			right: insideDivWidth/9,
+			left: insideDivWidth/4.6
 		},
 		w = insideDivWidth - margin.left - margin.right,
 		h = insideDivHeight - margin.top - margin.bottom;
@@ -280,23 +280,47 @@ angular.module('moneyGraphicsAppApp')
 		["Emi", "#706248"]
 		];
 
-		var xScale = d3.scale.ordinal()
+		var xScaleBNA = d3.scale.ordinal()
 		.domain(d3.range(datasetBNA.length))
 		.rangeRoundBands([0, w], 0.05);
 
-		var yScale = d3.scale.linear()
+		var yScaleBNA = d3.scale.linear()
 		.domain([0, d3.max(datasetBNA, function (d) {
 			return (d.value);
 		})])
 		.range([h, 0]);
-		var xAxis = d3.svg.axis()
-		.scale(xScale)
+		
+		var xAxisBNA = d3.svg.axis()
+		.scale(xScaleBNA)
 		.tickFormat(function (d) {
 			return datasetBNA[d].day;
 		})
 		.orient("bottom");
-		var yAxis = d3.svg.axis()
-		.scale(yScale)
+		
+		var yAxisBNA = d3.svg.axis()
+		.scale(yScaleBNA)
+		.orient("left")
+		.ticks(5);
+
+		var xScaleEMIS = d3.scale.ordinal()
+		.domain(d3.range(datasetEMIS.length))
+		.rangeRoundBands([0, w], 0.05);
+
+		var yScaleEMIS = d3.scale.linear()
+		.domain([0, d3.max(datasetEMIS, function (d) {
+			return (d.value);
+		})])
+		.range([h, 0]);
+		
+		var xAxisEMIS = d3.svg.axis()
+		.scale(xScaleEMIS)
+		.tickFormat(function (d) {
+			return datasetEMIS[d].day;
+		})
+		.orient("bottom");
+		
+		var yAxisEMIS = d3.svg.axis()
+		.scale(yScaleEMIS)
 		.orient("left")
 		.ticks(5);
 
@@ -317,27 +341,26 @@ angular.module('moneyGraphicsAppApp')
 			.append("g")
 			.attr("class", "set")
 			.attr("transform", function (d, i) {
-				return "translate(" + xScale(i) + ",0)";
+				return "translate(" + xScaleBNA(i) + ",0)";
 			});
 
 			sets.append("rect")
 			.attr("class", "local")
-			.attr("width", xScale.rangeBand() / 2)
+			.attr("width", xScaleBNA.rangeBand() / 2)
 			.attr("y", function (d) {
-				return yScale(d.value);
+				return yScaleBNA(d.value);
 			})
-			.attr("x", xScale.rangeBand() / 2)
+			.attr("x", xScaleBNA.rangeBand() / 2)
 			.attr("height", function (d) {
-				return h - yScale(d.value);
+				return h - yScaleBNA(d.value);
 			})
 			.attr("fill", colors[0][1])
 			;
 
-			// xAxis
 		    svg.append("g") // Add the X Axis
 		    .attr("class", "x axis")
 		    .attr("transform", "translate(0," + (h) + ")")
-		    .call(xAxis)
+		    .call(xAxisBNA)
 		    .selectAll("text")
 		    .style("text-anchor", "end")
 		    .attr("dx", "-.8em")
@@ -345,13 +368,12 @@ angular.module('moneyGraphicsAppApp')
 		    .attr("transform", function (d) {
 		    	return "rotate(-25)";
 		    });
-		    // yAxis
+
 		    svg.append("g")
 		    .attr("class", "y axis")
 		    .attr("transform", "translate(0 ,0)")
-		    .call(yAxis);
+		    .call(yAxisBNA);
 
-		    // xAxis label
 		    svg.append("text")
 		    .attr("transform", "rotate(0)")
 		    .attr("y", insideDivHeight-margin.bottom-margin.top+10)
@@ -362,7 +384,6 @@ angular.module('moneyGraphicsAppApp')
 		    .style("position", "absolute")
 		    .text("(Dias)");
 
-			// yAxis label
 			svg.append("text")
 			.attr("transform", "rotate(0)")
 			.attr("y", -margin.top/2-10)
@@ -389,27 +410,26 @@ angular.module('moneyGraphicsAppApp')
 			.append("g")
 			.attr("class", "set")
 			.attr("transform", function (d, i) {
-				return "translate(" + xScale(i) + ",0)";
+				return "translate(" + xScaleEMIS(i) + ",0)";
 			});
 
 			sets.append("rect")
 			.attr("class", "local")
-			.attr("width", xScale.rangeBand() / 2)
+			.attr("width", xScaleEMIS.rangeBand() / 2)
 			.attr("y", function (d) {
-				return yScale(d.value);
+				return yScaleEMIS(d.value);
 			})
-			.attr("x", xScale.rangeBand() / 2)
+			.attr("x", xScaleEMIS.rangeBand() / 2)
 			.attr("height", function (d) {
-				return h - yScale(d.value);
+				return h - yScaleEMIS(d.value);
 			})
 			.attr("fill", colors2[0][1])
 			;
 
-			// xAxis
-		    svg.append("g") // Add the X Axis
+			svg.append("g") // Add the X Axis
 		    .attr("class", "x axis")
 		    .attr("transform", "translate(0," + (h) + ")")
-		    .call(xAxis)
+		    .call(xAxisEMIS)
 		    .selectAll("text")
 		    .style("text-anchor", "end")
 		    .attr("dx", "-.8em")
@@ -417,13 +437,12 @@ angular.module('moneyGraphicsAppApp')
 		    .attr("transform", function (d) {
 		    	return "rotate(-25)";
 		    });
-		    // yAxis
+
 		    svg.append("g")
 		    .attr("class", "y axis")
 		    .attr("transform", "translate(0 ,0)")
-		    .call(yAxis);
+		    .call(yAxisEMIS);
 
-		    // xAxis label
 		    svg.append("text")
 		    .attr("transform", "rotate(0)")
 		    .attr("y", insideDivHeight-margin.bottom-margin.top+10)
@@ -434,7 +453,6 @@ angular.module('moneyGraphicsAppApp')
 		    .style("position", "absolute")
 		    .text("(Dias)");
 
-			// yAxis label
 			svg.append("text")
 			.attr("transform", "rotate(0)")
 			.attr("y", -margin.top/2-10)
@@ -468,10 +486,16 @@ angular.module('moneyGraphicsAppApp')
 });*/
 
 
-/*$interval(
-	function(){ 
-		WebApiService.getGraphics().then(function(data){
-			$scope.startProcess(data);
-		});
-}, 3000);*/
-  });
+	$interval(
+		function(){ 
+
+			return Restangular.one('values').get().then(function (data) {
+                $scope.startProcess(data);
+            });
+
+			/*WebApiService.getGraphics().then(function(data){
+				$scope.startProcess(data);
+			});*/
+	}, 10000);
+
+});

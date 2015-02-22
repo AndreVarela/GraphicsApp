@@ -25,7 +25,7 @@
 
 	 	$scope.totalAmountBNA = graphics.radialProgress.totalMoneyBNA;
 		$scope.sobraAmountBNA = graphics.radialProgress.sobraMoneyBNA;
-		$scope.totalAmountEMIS = graphics.radialProgress.totalMoneyBNA;
+		$scope.totalAmountEMIS = graphics.radialProgress.totalMoneyEMIS;
 		$scope.sobraAmountEMIS = graphics.radialProgress.sobraMoneyEMIS;
 	 });
 
