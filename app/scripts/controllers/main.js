@@ -11,6 +11,7 @@
  .constant('settings', {
   categoryMoney: 'Tipo Moeda',
   categoryMessage: 'Tipo Mensagem',
+  categoryFormat: 'Tipo Formato',
 })
  .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location, graphics, emails, plafound,$sce, codeDecodes, settings) {
  	$scope.userName = sessionStorage.getItem('userName');
@@ -91,7 +92,7 @@
  	/* Reports */
 
  	$scope.report = {dates:{},money:{}};
- 	$scope.codeDecodes = {messageType:{}, moneyType:{}}
+ 	$scope.codeDecodes = {messageType:{}, moneyType:{}, formatType:{}}
 
  	$scope.mapCodeDecodes = function()
  	{
@@ -114,6 +115,17 @@
  		});
 
  		$scope.codeDecodes.moneyType = _.map($scope.codeDecodes.moneyType, function(code){
+ 			return {code: code.code, shortDescription: code.code}
+ 		});
+
+ 		$scope.codeDecodes.formatType = _.filter(codeDecodes, function(code){
+ 		 	if(code.category === settings.categoryFormat)
+ 		 	{
+ 		 		return code; 
+ 		 	}
+ 		});
+
+ 		$scope.codeDecodes.formatType = _.map($scope.codeDecodes.formatType, function(code){
  			return {code: code.code, shortDescription: code.code}
  		});
  	}

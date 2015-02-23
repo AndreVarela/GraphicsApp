@@ -48,15 +48,15 @@
 								</datebox>
 							</div>
 							<div class="col-xs-3">
-								<dropdown items="codeDecodes.messageType" label="Tipo de Mensagem" model="report.messageType" placeholder="Escolha o tipo de mensagem"></dropdown>
+								<dropdown items="codeDecodes.messageType" label="Tipo de Mensagem" model="report.messageType" placeholder="Escolha o tipo de mensagem" id="ReportMessageType"></dropdown>
 							</div>
 							<div class="col-xs-3">
-								<textbox label="Agência Receptora" model="report.agencyReceptora" placeholder="Coloque o código da Agência Receptora"></textbox>
+								<textbox label="Receptor/Emissor" model="report.agencyReceptora" placeholder="Coloque o código da Agência Receptora"></textbox>
 							</div>
 						</div>
 						<div class="col-xs-12">
 							<div class="col-xs-3">
-								<dropdown items="codeDecodes.moneyType" label="Tipo de Moeda" model="report.moneyType" placeholder="Escolha o tipo de moeda"></dropdown>
+								<dropdown items="codeDecodes.moneyType" label="Tipo de Moeda" model="report.moneyType" placeholder="Escolha o tipo de moeda" id="ReportMoneyType"></dropdown>
 							</div>
 						    <div class="col-xs-3">
 								<moneybox label="Valor Mínimo" model="report.money.min" placeholder="Coloque o valor mínimo em Kuanzas"></moneybox>
@@ -67,7 +67,11 @@
 							<div class="col-xs-3">
 								<textbox label="Referência TRN" model="report.trnReference" placeholder="Coloque o código da Referência TRN"></textbox>
 							</div>
-							
+						</div>
+						<div class="col-xs-12">
+							<div class="col-xs-3">
+								<dropdown items="codeDecodes.formatType" label="Tipo de Formato" model="report.formatType" placeholder="Escolha o tipo de formato" id="ReportFormatType"></dropdown>
+							</div>
 						</div>
 						
 						<div class="col-xs-12">

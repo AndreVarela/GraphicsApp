@@ -148,17 +148,6 @@
     '<option value="" style="color: #999;" class="clickable">{{placeholder}}</option>' +
     '</select>'+
     '</div>',
-    link: function(scope, elm, attrs) {
-      scope.$watch('model', function(nVal) {
-       var current = elm.val();
-       if (current !== '') {
-         elm.css('color','black');
-       } else {
-         elm.css('color','#999 !important;');
-       }
-
-     });
-    },
   replace: true
 };
 })

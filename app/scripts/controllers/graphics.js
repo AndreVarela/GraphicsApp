@@ -496,6 +496,6 @@ angular.module('moneyGraphicsAppApp')
 			/*WebApiService.getGraphics().then(function(data){
 				$scope.startProcess(data);
 			});*/
-	}, 10000);
+	}, 60000);
 
 });

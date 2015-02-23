@@ -1,5 +1,6 @@
 Fazer no Futuro
 	-> DesBloquear app
+	-> Gravar app
 
 Dependentes de terceiros
 
@@ -23,23 +24,6 @@ Correções Não prioritárias
 
 Correções prioritárias
 
-	-> placeholder das drops ficar cinzento
-
 	-> Graficos
 		-> Descobrir o network ACK
-		-> trn_ref tem valores estranhos. Não da para retirar so o DOP. (0000375554, 5494ACC504842392,ACEN50218H000016, DCR 	50218H000013,DEP150211-000159, E657/0562845/DLC) -> Como faço o group by?!?!? (corrigir essa parte nos graficos 	DonutBNA e DonutEMIS)
-		-> Char Grafico -> Por causa da legenda...isso passa dos 180 milhoes de dolares por dia???
-
 	
-
-
-
-
-
-
-
-
-
-
-
-
