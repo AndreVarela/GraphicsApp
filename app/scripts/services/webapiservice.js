@@ -13,7 +13,7 @@
     // -> /api/ em produção
  	// -> http://localhost:30954/ em dev
  	//Actualizar no restangular tambem -> app.js
- 	var getURLServer = '/api/'
+ 	var getURLServer = 'http://localhost:30954/'
 
  	return {
  		getURLServer : getURLServer,

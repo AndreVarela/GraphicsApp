@@ -376,13 +376,13 @@ angular.module('moneyGraphicsAppApp')
 
 		    svg.append("text")
 		    .attr("transform", "rotate(0)")
-		    .attr("y", insideDivHeight-margin.bottom-margin.top+10)
-		    .attr("x", insideDivWidth-margin.left-margin.right+20)
+		    .attr("y", insideDivHeight-margin.bottom-margin.top+30)
+		    .attr("x", insideDivWidth-margin.left-margin.right-10)
 		    .attr("dy", "1em")
 		    .style("text-anchor", "middle")
 		    .style("style", "fontred")
 		    .style("position", "absolute")
-		    .text("(Dias)");
+		    .text("(Últimos Dias)");
 
 			svg.append("text")
 			.attr("transform", "rotate(0)")
@@ -392,7 +392,7 @@ angular.module('moneyGraphicsAppApp')
 			.style("text-anchor", "middle")
 			.style("style", "fontred")
 			.style("position", "absolute")
-			.text("(Volume)");
+			.text("(AOA)");
 		}
 
 		function RenderGroupedGraphicEMIS(dataset)
@@ -445,13 +445,13 @@ angular.module('moneyGraphicsAppApp')
 
 		    svg.append("text")
 		    .attr("transform", "rotate(0)")
-		    .attr("y", insideDivHeight-margin.bottom-margin.top+10)
-		    .attr("x", insideDivWidth-margin.left-margin.right+20)
+		    .attr("y", insideDivHeight-margin.bottom-margin.top+30)
+		    .attr("x", insideDivWidth-margin.left-margin.right-10)
 		    .attr("dy", "1em")
 		    .style("text-anchor", "middle")
 		    .style("style", "fontred")
 		    .style("position", "absolute")
-		    .text("(Dias)");
+		    .text("(Últimos Dias)");
 
 			svg.append("text")
 			.attr("transform", "rotate(0)")
@@ -461,7 +461,7 @@ angular.module('moneyGraphicsAppApp')
 			.style("text-anchor", "middle")
 			.style("style", "fontred")
 			.style("position", "absolute")
-			.text("(Volume)");	
+			.text("(AOA)");	
 
 		}
 
@@ -480,22 +480,12 @@ angular.module('moneyGraphicsAppApp')
 		$scope.startProcess(data);
 	};
 
-//REMOVER ISTO QD METER O INTERVAL
-/*WebApiService.getGraphics().then(function(data){
-	$scope.MakeGraphics(data);
-});*/
-
-
 	$interval(
 		function(){ 
 
 			return Restangular.one('values').get().then(function (data) {
                 $scope.startProcess(data);
             });
-
-			/*WebApiService.getGraphics().then(function(data){
-				$scope.startProcess(data);
-			});*/
 	}, 60000);
 
 });

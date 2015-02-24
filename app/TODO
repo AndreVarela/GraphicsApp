@@ -23,7 +23,24 @@ Correções Não prioritárias
 
 
 Correções prioritárias
+	-> Para depois
+		-> Graficos
+			-> Descobrir o network ACK
+
+		-> Login
+			-> Remoção Equation e ter uma tabela nossa de utilizadores e passwords.
+			-> Ecra para mudança de Password
+			-> Adicionar na Administração
+				-> Adição User e Permissão
+
+		-> Graficos
+			-> Actualizar em cada 10 minutos
+
+-------------------------------------------------------------------------------
+
 
 	-> Graficos
-		-> Descobrir o network ACK
+		-> Não actualizou o donut nem o Resto.
+		DONE -> Ver a ordem das cores do donut. tornar estático.
+		DONE-> Donut -> só 6 agencias.
 	

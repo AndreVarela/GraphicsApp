@@ -9,26 +9,60 @@
  */
  angular.module('moneyGraphicsAppApp')
  .constant('settings', {
-  categoryMoney: 'Tipo Moeda',
-  categoryMessage: 'Tipo Mensagem',
-  categoryFormat: 'Tipo Formato',
-})
+ 	categoryMoney: 'Tipo Moeda',
+ 	categoryMessage: 'Tipo Mensagem',
+ 	categoryFormat: 'Tipo Formato',
+ })
  .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location, graphics, emails, plafound,$sce, codeDecodes, settings) {
  	$scope.userName = sessionStorage.getItem('userName');
  	$scope.role = sessionStorage.getItem('role');
 
+	/*Funcoes Auxiliares*/
+
+	function parseDate(str) {
+	    var mdy = str.split('-')
+	    return new Date(mdy[0], mdy[1]-1, mdy[2]);
+	}
+
+	function daydiff(second, first) {
+	    return (second-first)/(1000*60*60*24);
+	}
+
+ 	$scope.actualDate = function() {
+ 		var d = new Date();
+ 		var yyyy = d.getFullYear().toString();
+   		var mm = (d.getMonth()+1).toString(); // getMonth() is zero-based
+   		var dd  = d.getDate().toString();
+   		return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]); // padding
+   	};
+
+   	$scope.actualDateAndTime = function() {
+   		var d = new Date();
+   		var yyyy = d.getFullYear().toString();
+   		var mm = (d.getMonth()+1).toString(); // getMonth() is zero-based
+   		var dd  = d.getDate().toString();
+   		var seconds = d.getSeconds().toString();
+   		var minutes = d.getMinutes().toString();
+   		var hour = d.getHours().toString();
+   		return yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]) + '_' + (hour[1]?hour:"0"+hour[0]) + (minutes[1]?minutes:"0"+minutes[0]) + 
+   		(seconds[1]?seconds:"0"+seconds[0]);
+   	};
+
+   	/* Fim das funcoes auxiliares */
+
+
  	/* Graphics */
  	
-	$timeout(function() {
-		var scopeGraphicsCtrl = $scope.$new();
+ 	$timeout(function() {
+ 		var scopeGraphicsCtrl = $scope.$new();
  		$controller('GraphicsCtrl',{$scope : scopeGraphicsCtrl });
-	 	scopeGraphicsCtrl.MakeGraphics(graphics);
+ 		scopeGraphicsCtrl.MakeGraphics(graphics);
 
-	 	$scope.totalAmountBNA = graphics.radialProgress.totalMoneyBNA;
-		$scope.sobraAmountBNA = graphics.radialProgress.sobraMoneyBNA;
-		$scope.totalAmountEMIS = graphics.radialProgress.totalMoneyEMIS;
-		$scope.sobraAmountEMIS = graphics.radialProgress.sobraMoneyEMIS;
-	 });
+ 		$scope.totalAmountBNA = graphics.radialProgress.totalMoneyBNA;
+ 		$scope.sobraAmountBNA = graphics.radialProgress.sobraMoneyBNA;
+ 		$scope.totalAmountEMIS = graphics.radialProgress.totalMoneyEMIS;
+ 		$scope.sobraAmountEMIS = graphics.radialProgress.sobraMoneyEMIS;
+ 	});
 
  	/* Fim de Graphics */
 
@@ -58,8 +92,8 @@
 
  	$scope.saveEmails = function(){
  		WebApiService.updateEmails($scope.emails).then(function(){
-	    	alert('Emails gravados com sucesso.');
-	  	});
+ 			alert('Emails gravados com sucesso.');
+ 		});
  	};
 
 
@@ -77,30 +111,30 @@
 
  		if(plafound !== undefined && plafound.bna !== null && plafound.bna !== undefined && plafound.emis !== null && plafound.emis !== undefined)
  		{
-			WebApiService.addPlafounds(plafound).then(function(){
-		    	alert('Plafounds alterados com sucesso.');
-		  	});
-		}
-		else
-		{
-			alert('Introduza apenas valores numéricos.')			
-		}
+ 			WebApiService.addPlafounds(plafound).then(function(){
+ 				alert('Plafonds alterados com sucesso.');
+ 			});
+ 		}
+ 		else
+ 		{
+ 			alert('Introduza apenas valores numéricos.')			
+ 		}
  	}
 
  	/* Fim de Administração */
 
  	/* Reports */
 
- 	$scope.report = {dates:{},money:{}};
+ 	$scope.report = {dates:{min:$scope.actualDate(),max:$scope.actualDate()},money:{}};
  	$scope.codeDecodes = {messageType:{}, moneyType:{}, formatType:{}}
 
  	$scope.mapCodeDecodes = function()
  	{
  		$scope.codeDecodes.messageType = _.filter(codeDecodes, function(code){
- 		 	if(code.category === settings.categoryMessage)
- 		 	{
- 		 		return code; 
- 		 	}
+ 			if(code.category === settings.categoryMessage)
+ 			{
+ 				return code; 
+ 			}
  		});
 
  		$scope.codeDecodes.messageType = _.map($scope.codeDecodes.messageType, function(code){
@@ -108,10 +142,10 @@
  		});
  		
  		$scope.codeDecodes.moneyType = _.filter(codeDecodes, function(code){
- 		 	if(code.category === settings.categoryMoney)
- 		 	{
- 		 		return code; 
- 		 	}
+ 			if(code.category === settings.categoryMoney)
+ 			{
+ 				return code; 
+ 			}
  		});
 
  		$scope.codeDecodes.moneyType = _.map($scope.codeDecodes.moneyType, function(code){
@@ -119,10 +153,10 @@
  		});
 
  		$scope.codeDecodes.formatType = _.filter(codeDecodes, function(code){
- 		 	if(code.category === settings.categoryFormat)
- 		 	{
- 		 		return code; 
- 		 	}
+ 			if(code.category === settings.categoryFormat)
+ 			{
+ 				return code; 
+ 			}
  		});
 
  		$scope.codeDecodes.formatType = _.map($scope.codeDecodes.formatType, function(code){
@@ -130,22 +164,50 @@
  		});
  	}
 
+ 	$scope.runValidations = function()
+ 	{
+ 		if($scope.report.dates.min === null || 
+ 			$scope.report.dates.min === undefined )
+ 		{
+ 			alert('A Data Mínima é obrigatória.')
+ 			return false;
+ 		}
+
+ 		if($scope.report.dates.max === null || 
+ 			$scope.report.dates.max === undefined )
+ 		{
+ 			alert('A Data Máxima é obrigatória.')
+ 			return false;
+ 		}
+
+ 		if((daydiff(parseDate($scope.report.dates.max), parseDate($scope.report.dates.min))) >= 7)
+ 		{
+ 			alert('O intervalo de datas não pode ser superior a 7 dias.')
+ 			return false;
+ 		}
+
+ 		return true;
+ 	}
+
  	$scope.DownloadFile = function(typeFile, extensionFile)
  	{
  		$scope.report.typeFile = typeFile;
  		$scope.report.extensionFile = extensionFile;
 
-		WebApiService.getReport($scope.report).then(function(data){
-			if(data.byteLength === 0)
-			{
-				alert('Não foram retornados resultados.');
-			}
-			else
-			{
-				var file = new Blob([data], { type: 'text/plain;charset=utf-8' });
-            	saveAs(file, 'relatorioMovimentos_'+ $scope.actualDateAndTime() + '.'+ $scope.report.extensionFile);
-        	}
-		});
+ 		if($scope.runValidations())
+ 		{
+ 			WebApiService.getReport($scope.report).then(function(data){
+ 				if(data.byteLength === 0)
+ 				{
+ 					alert('Não foram retornados resultados.');
+ 				}
+ 				else
+ 				{
+ 					var file = new Blob([data], { type: 'text/plain;charset=utf-8' });
+ 					saveAs(file, 'relatorioMovimentos_'+ $scope.actualDateAndTime() + '.'+ $scope.report.extensionFile);
+ 				}
+ 			});
+ 		}
  	};
 
  	$scope.mapCodeDecodes();
@@ -155,35 +217,13 @@
  	/* Logout */
 
  	$scope.logout = function()
-	{
-	  UserService.logout().then(function(){
-	    $location.path('/login');
-	  });
-	};
+ 	{
+ 		UserService.logout().then(function(){
+ 			$location.path('/login');
+ 		});
+ 	};
 
  	/* Fim de Logout */
 
- 	/*Funcoes Auxiliares*/
-
- 	$scope.actualDate = function() {
- 	 	var d = new Date();
-   		var yyyy = d.getFullYear().toString();
-   		var mm = (d.getMonth()+1).toString(); // getMonth() is zero-based
-   		var dd  = d.getDate().toString();
-   		return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]); // padding
-  	};
-
-  	$scope.actualDateAndTime = function() {
- 	 	var d = new Date();
-   		var yyyy = d.getFullYear().toString();
-   		var mm = (d.getMonth()+1).toString(); // getMonth() is zero-based
-   		var dd  = d.getDate().toString();
-   		var seconds = d.getSeconds().toString();
-		var minutes = d.getMinutes().toString();
-		var hour = d.getHours().toString();
-   		return yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]) + '_' + (hour[1]?hour:"0"+hour[0]) + (minutes[1]?minutes:"0"+minutes[0]) + 
-			(seconds[1]?seconds:"0"+seconds[0]);
-  	};
-
- 	/* Fim das funcoes auxiliares */
- });
+ 	
+   });
