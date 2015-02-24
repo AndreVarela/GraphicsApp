@@ -8,13 +8,16 @@
  * Controller of the moneyGraphicsAppApp
  */
 angular.module('moneyGraphicsAppApp')
-  .controller('GraphicsCtrl', function ($scope, WebApiService, $interval, Restangular) {
+  .controller('GraphicsCtrl', function ($scope, WebApiService, $interval, Restangular, $timeout, $rootScope) {
     $scope.startProcess = function startProcess(data)
 	{
 		$scope.start(data.radialProgress.counterBNA, data.radialProgress.counterEMIS); 
 		$scope.UpdateDonutBNA(data.donutBNA);	
 		$scope.UpdateDonutEMIS(data.donutEMIS);		
 		$scope.UpdateGroupBar(data.barBNA, data.barEMIS);
+
+		$('#ValorSobraDia').text('Resta: ' + data.radialProgress.sobraMoneyBNA + " AOA");
+		$('#ValorSobraDia2').text('Resta: ' + data.radialProgress.sobraMoneyEMIS + " AOA");
 	}
 
  	$scope.MakeGraphics = function MakeGraphics(data)
@@ -36,7 +39,7 @@ angular.module('moneyGraphicsAppApp')
 
 		$scope.totalAmountBNA = jsonRadialProgress.totalMoneyBNA;
 		$scope.sobraAmountBNA = jsonRadialProgress.sobraMoneyBNA;
-		$scope.totalAmountEMIS = jsonRadialProgress.totalMoneyBNA;
+		$scope.totalAmountEMIS = jsonRadialProgress.totalMoneyEMIS;
 		$scope.sobraAmountEMIS = jsonRadialProgress.sobraMoneyEMIS;
 
 		var _beginDonut1 = 0, _beginDonut2 = 0;
@@ -376,13 +379,13 @@ angular.module('moneyGraphicsAppApp')
 
 		    svg.append("text")
 		    .attr("transform", "rotate(0)")
-		    .attr("y", insideDivHeight-margin.bottom-margin.top+30)
-		    .attr("x", insideDivWidth-margin.left-margin.right-10)
+		 	.attr("y", insideDivHeight-margin.bottom-margin.top+10)
+            .attr("x", insideDivWidth-margin.left-margin.right+20)
 		    .attr("dy", "1em")
 		    .style("text-anchor", "middle")
 		    .style("style", "fontred")
 		    .style("position", "absolute")
-		    .text("(Últimos Dias)");
+		    .text("(Dias)");
 
 			svg.append("text")
 			.attr("transform", "rotate(0)")
@@ -445,13 +448,13 @@ angular.module('moneyGraphicsAppApp')
 
 		    svg.append("text")
 		    .attr("transform", "rotate(0)")
-		    .attr("y", insideDivHeight-margin.bottom-margin.top+30)
-		    .attr("x", insideDivWidth-margin.left-margin.right-10)
+		    .attr("y", insideDivHeight-margin.bottom-margin.top+10)
+            .attr("x", insideDivWidth-margin.left-margin.right+20)
 		    .attr("dy", "1em")
 		    .style("text-anchor", "middle")
 		    .style("style", "fontred")
 		    .style("position", "absolute")
-		    .text("(Últimos Dias)");
+		    .text("(Dias)");
 
 			svg.append("text")
 			.attr("transform", "rotate(0)")
@@ -482,10 +485,9 @@ angular.module('moneyGraphicsAppApp')
 
 	$interval(
 		function(){ 
-
 			return Restangular.one('values').get().then(function (data) {
                 $scope.startProcess(data);
-            });
-	}, 60000);
+             });
+	}, 10000);
 
 });

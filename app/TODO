@@ -20,7 +20,7 @@ Correções Não prioritárias
 	Da um SqlException sempre que inicializo o servidor...Da um erro mas deixa-me entrar :S
 	Tempo Limite da Ligação Expirado. O tempo limite esgotou-se durante a fase posterior ao início de sessão. A ligação pode ter excedido o tempo limite ao aguardar que o servidor concluísse o processo de início de sessão e respondesse ou ao tentar criar múltiplas ligações ativas.  O tempo gasto a tentar ligar a este servidor foi - [Pré-início de sessão] inicialização=9; handshake=83; [Início de sessão] inicialização=17; autenticação=0; [Pós-
 
-
+	-> SignalR
 
 Correções prioritárias
 	-> Para depois
@@ -33,14 +33,13 @@ Correções prioritárias
 			-> Adicionar na Administração
 				-> Adição User e Permissão
 
+		-> Botão para actualização dos valores da BD.
+
 		-> Graficos
 			-> Actualizar em cada 10 minutos
 
 -------------------------------------------------------------------------------
 
-
 	-> Graficos
-		-> Não actualizou o donut nem o Resto.
-		DONE -> Ver a ordem das cores do donut. tornar estático.
-		DONE-> Donut -> só 6 agencias.
+		Não actualizou o donut
 	
