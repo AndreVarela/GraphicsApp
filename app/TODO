@@ -11,6 +11,7 @@ Dependentes de terceiros
 
 	    Preciso de testar isto...por causa das percentagens que os graficos me dão, e pode nem haver valores para os graficos...Depende de como tiver o código dos graficos feito. Rever essa parte.
 
+	-> WebService LDAP para autenticação
 
 Correções Não prioritárias
 
@@ -22,24 +23,14 @@ Correções Não prioritárias
 
 	-> SignalR
 
+	-> Validacoes
+		-> Nao se pode adicionar o mesmo utilizador / email
+
 Correções prioritárias
 	-> Para depois
 		-> Graficos
 			-> Descobrir o network ACK
 
-		-> Login
-			-> Remoção Equation e ter uma tabela nossa de utilizadores e passwords.
-			-> Ecra para mudança de Password
-			-> Adicionar na Administração
-				-> Adição User e Permissão
-
-		-> Botão para actualização dos valores da BD.
-
 		-> Graficos
-			-> Actualizar em cada 10 minutos
+			-> Não actualizou o donut, quando se muda os plafonds.
 
--------------------------------------------------------------------------------
-
-	-> Graficos
-		Não actualizou o donut
-	

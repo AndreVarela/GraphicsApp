@@ -13,16 +13,34 @@
     // -> /api/ em produção
  	// -> http://localhost:30954/ em dev
  	//Actualizar no restangular tambem -> app.js
- 	var getURLServer = '/api/'
+ 	var getURLServer = 'http://localhost:30954/'
+    // -> 600000 em produção
+ 	// ->  10000 em dev
+ 	var getTimeRefresh = 10000
 
  	return {
  		getURLServer : getURLServer,
+ 		getTimeRefresh: getTimeRefresh,
  		
 	  	updateEmails: function(emails)
 	  	{
 	  		var deferred = $q.defer();
  			
  			$http.post(getURLServer+'email', emails)
+				.success(function(data, status, config, headers){
+ 					deferred.resolve(data);
+ 				})
+	        	.error(function(data, status, headers, config, statusText){
+	      	    	deferred.reject(data, status, headers);
+	        	});
+
+	        return deferred.promise;
+	  	},
+	  	updateUsers: function(users)
+	  	{
+	  		var deferred = $q.defer();
+ 			
+ 			$http.post(getURLServer+'user', users)
 				.success(function(data, status, config, headers){
  					deferred.resolve(data);
  				})

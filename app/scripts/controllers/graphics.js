@@ -488,6 +488,6 @@ angular.module('moneyGraphicsAppApp')
 			return Restangular.one('values').get().then(function (data) {
                 $scope.startProcess(data);
              });
-	}, 10000);
+	}, WebApiService.getTimeRefresh);
 
 });

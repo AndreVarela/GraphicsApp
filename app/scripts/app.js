@@ -55,9 +55,9 @@ angular
     };
 })
   .config(function ($routeProvider, $httpProvider,RestangularProvider) {
-    RestangularProvider.setBaseUrl('/api/');
+    RestangularProvider.setBaseUrl('http://localhost:30954/');
+    
     $httpProvider.interceptors.push('myHttpInterceptor');
-
     $routeProvider
       .when('/login', {
         templateUrl: 'views/login.html',
@@ -81,6 +81,13 @@ angular
                 }, function (data, status, headers, config, statusText) {
                     return data;
                 });
+            },
+            users: function(Restangular){
+              return Restangular.one('user').get().then(function (data) {
+                                  return data;
+                              }, function (data, status, headers, config, statusText) {
+                                  return data;
+                              });
             },
             plafound: function(Restangular){
               return Restangular.one('plafound').get().then(function (data) {

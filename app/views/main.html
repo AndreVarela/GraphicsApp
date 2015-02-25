@@ -84,7 +84,7 @@
 							<embed ng-src="{{content}}" style="width:200px;height:200px;"></embed>
 						</div>
 					</pane>
-					<pane title="Administração" tab-name="TabAdministracao">
+					<pane title="Gestão" tab-name="TabGestao">
 						<div class="col-xs-12">
 							<div class="HeadersPage">
 								<h3>Plafond do dia <span style="font-size: 0.5em;">({{actualDate()}})</span></h3>
@@ -105,6 +105,64 @@
 									</div>
 								</div>
 							</form>
+						</div>
+					</pane>
+					<pane title="Administração" tab-name="TabAdministracao">
+						<div class="col-xs-12" style="margin-top:20px;">
+							<div class="HeadersPage">
+								<h3>Gestão de Utilizadores</h3>
+							</div>
+						</div>
+
+						<div class="col-xs-12">
+							<div class="col-xs-3">
+								<form ng-submit="addUser(user)">
+
+									<textbox label="Username" model="user.username" control-id="UserAdmin" placeholder="Username a adicionar"></emailbox>
+									<dropdown items="permissionTypes" label="Tipo de Permissão" model="user.permission" placeholder="Escolha o tipo de permissão" id="AdminPermissionType"></dropdown>
+									<div class="row"></div>
+									<div class="form-group">
+										<button class="btn btn-default">Adicionar</button> 
+									</div>
+								</form>
+							</div>
+							<div class="col-xs-offset-1 col-xs-5">
+								<table class="table table-striped ">
+									<thead>
+										<tr>
+											<th class="col-xs-4">Username</th>
+											<th class="col-xs-4">Permissão</th>
+											<th class="col-xs-1"><center>Activo</center></th>
+											<th class="col-xs-1"> </th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="u in users | orderBy:'username'">
+											<td class="col-xs-4">
+												<input class="form-control" type="textbox" ng-model="u.username" />
+											</td>
+											<td class="col-xs-4">
+												<select ng-model="u.permission" style="width: 100%;" class="form-control input-sm" ng-options="c.code as c.shortDescription for c in permissionTypes">
+											    	<option value="" style="color: #999;" class="clickable">Escolha o tipo de permissão</option>
+											    </select>
+											</td>
+											<td class="col-xs-1">
+												<center>
+													<input type="checkbox" ng-model="u.active"/>
+												</center>
+											</td>
+											<td class="col-xs-1">
+												<button class="btn btn-xs btn-danger" ng-click="removeFromUserList(u, users)"><i class="glyphicon glyphicon-trash" style="color:white" ></i> </button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="col-xs-3">
+								<div class="form-group pull-right">
+									<button class="btn btn-primary" ng-click="saveUsers()">Confirmar</button> 
+								</div>
+							</div>
 						</div>
 
 						<div class="col-xs-12" style="margin-top:20px;">

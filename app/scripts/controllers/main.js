@@ -12,8 +12,9 @@
  	categoryMoney: 'Tipo Moeda',
  	categoryMessage: 'Tipo Mensagem',
  	categoryFormat: 'Tipo Formato',
+   categoryPermission: 'Tipo de Permissao'
  })
- .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location, graphics, emails, plafound,$sce, codeDecodes, settings) {
+ .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location, graphics, emails, plafound,$sce, codeDecodes, settings, users) {
  	$scope.userName = sessionStorage.getItem('userName');
  	$scope.role = sessionStorage.getItem('role');
 
@@ -121,6 +122,37 @@
  		}
  	}
 
+
+   $scope.users = users;
+   
+   $scope.addUser = function(user){
+
+      if(user !== undefined && user.user !== null && user.permission !== null)
+      {
+         $scope.users.push({username: user.username, permission: user.permission, active: true});
+         user.username = null;
+         user.permission = null;
+         user.active = null;
+      }
+
+      $timeout(function() {
+         $('#UserAdmin').focus();
+      });
+   };
+
+   $scope.removeFromUserList = function(item, list){
+      var index = list.indexOf(item);
+      if (index > -1) {
+         list.splice(index, 1);
+      }
+   };
+
+   $scope.saveUsers = function(){
+      WebApiService.updateUsers($scope.users).then(function(){
+         alert('Utilizadores gravados com sucesso.');
+      });
+   };
+
  	/* Fim de Administração */
 
  	/* Reports */
@@ -162,6 +194,18 @@
  		$scope.codeDecodes.formatType = _.map($scope.codeDecodes.formatType, function(code){
  			return {code: code.code, shortDescription: code.code}
  		});
+
+
+      $scope.permissionTypes = _.filter(codeDecodes, function(code){
+         if(code.category === settings.categoryPermission)
+         {
+            return code; 
+         }
+      });
+
+      $scope.permissionTypes = _.map($scope.permissionTypes, function(code){
+         return {code: code.code, shortDescription: code.code}
+      });
  	}
 
  	$scope.runValidations = function()
