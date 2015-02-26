@@ -92,9 +92,21 @@
  	};
 
  	$scope.saveEmails = function(){
- 		WebApiService.updateEmails($scope.emails).then(function(){
- 			alert('Emails gravados com sucesso.');
- 		});
+
+      $scope.emailName = _.map($scope.emails, function(email){
+         return email.email;
+      });
+     
+      if($scope.emailName.length !== _.uniq($scope.emailName).length)
+      {
+         alert('Não podem existir Emails com nomes repetidos.');
+      }
+      else
+      {   
+    		WebApiService.updateEmails($scope.emails).then(function(){
+    			alert('Emails gravados com sucesso.');
+    		});
+      }
  	};
 
 
@@ -114,6 +126,20 @@
  		{
  			WebApiService.addPlafounds(plafound).then(function(){
  				alert('Plafonds alterados com sucesso.');
+
+            _beginDonut1 = 0;
+            _beginDonut2 = 0;
+
+            $timeout(function() {
+               var scopeGraphicsCtrl = $scope.$new();
+               $controller('GraphicsCtrl', {$scope : scopeGraphicsCtrl });
+               scopeGraphicsCtrl.MakeGraphics(graphics);
+
+               $scope.totalAmountBNA = graphics.radialProgress.totalMoneyBNA;
+               $scope.sobraAmountBNA = graphics.radialProgress.sobraMoneyBNA;
+               $scope.totalAmountEMIS = graphics.radialProgress.totalMoneyEMIS;
+               $scope.sobraAmountEMIS = graphics.radialProgress.sobraMoneyEMIS;
+            });
  			});
  		}
  		else
@@ -148,9 +174,21 @@
    };
 
    $scope.saveUsers = function(){
-      WebApiService.updateUsers($scope.users).then(function(){
-         alert('Utilizadores gravados com sucesso.');
+     
+     $scope.usernames = _.map($scope.users, function(user){
+         return user.username;
       });
+     
+      if($scope.usernames.length !== _.uniq($scope.usernames).length)
+      {
+         alert('Os nomes dos Utilizadores devem ser únicos.');
+      }
+      else
+      {     
+         WebApiService.updateUsers($scope.users).then(function(){
+            alert('Utilizadores gravados com sucesso.');
+         });
+      }
    };
 
  	/* Fim de Administração */
