@@ -16,7 +16,7 @@
  	var getURLServer = 'http://localhost:30954/'
     // -> 600000 em produção
  	// ->  10000 em dev
- 	var getTimeRefresh = 10000
+ 	var getTimeRefresh = 60000
 
  	return {
  		getURLServer : getURLServer,
