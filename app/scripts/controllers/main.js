@@ -14,9 +14,15 @@
  	categoryFormat: 'Tipo Formato',
    categoryPermission: 'Tipo de Permissao'
  })
- .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location, graphics, emails, plafound,$sce, codeDecodes, settings, users) {
+ .controller('MainCtrl', function ($scope, UserService, WebApiService, $controller, $timeout, $location,$sce, settings, allInfo) {
  	$scope.userName = sessionStorage.getItem('userName');
  	$scope.role = sessionStorage.getItem('role');
+
+   var users = allInfo.users;
+   var graphics = allInfo.graphics;
+   var emails = allInfo.emails;
+   var plafound = allInfo.plafound;
+   var codeDecodes = allInfo.codeDecodes;
 
 	/*Funcoes Auxiliares*/
 

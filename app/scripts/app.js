@@ -68,36 +68,8 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         resolve: {
-            graphics: function(Restangular){
-                return Restangular.one('values').get().then(function (data) {
-                    return data;
-                }, function (data, status, headers, config, statusText) {
-                    return data;
-                });
-            },
-            emails: function(Restangular){
-              return Restangular.one('email').get().then(function (data) {
-                    return data;
-                }, function (data, status, headers, config, statusText) {
-                    return data;
-                });
-            },
-            users: function(Restangular){
-              return Restangular.one('user').get().then(function (data) {
-                                  return data;
-                              }, function (data, status, headers, config, statusText) {
-                                  return data;
-                              });
-            },
-            plafound: function(Restangular){
-              return Restangular.one('plafound').get().then(function (data) {
-                    return data;
-                }, function (data, status, headers, config, statusText) {
-                    return data;
-                });
-            },
-            codeDecodes: function(Restangular){
-              return Restangular.one('codedecode').get().then(function (data) {
+            allInfo: function(Restangular){
+                return Restangular.one('allStartInformation').get().then(function (data) {
                     return data;
                 }, function (data, status, headers, config, statusText) {
                     return data;
