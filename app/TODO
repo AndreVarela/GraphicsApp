@@ -15,18 +15,8 @@ Correções Não prioritárias
 
 	->Quando cai no erro de cima o gajo aprensenta montes de mensagens na consola da aplicação. Arranjar um meio de travar isso. Linha return $q.reject(rejection); no app.js 
 
-	-> Problema no login...n percebo (18_02_2015 -> Nao voltou a acontecer. Se voltar corrige-se.)
-	Da um SqlException sempre que inicializo o servidor...Da um erro mas deixa-me entrar :S
-		Tempo Limite da Ligação Expirado. O tempo limite esgotou-se durante a fase posterior ao início de sessão. A ligação pode ter excedido o tempo limite ao aguardar que o servidor concluísse o processo de início de sessão e respondesse ou ao tentar criar múltiplas ligações ativas.  O tempo gasto a tentar ligar a este servidor foi - [Pré-início de sessão] inicialização=9; handshake=83; [Início de sessão] inicialização=17; autenticação=0; [Pós-
-
 	-> SignalR
 
-
-Correções prioritárias
 	-> Graficos
 		-> Descobrir o network ACK
-		-> Não actualizou o donut, quando se muda os plafonds.
 
-	-> Validacoes
-		-> Nao se pode adicionar o mesmo utilizador / email. Já ta feito
-		-> testar cenas dos plafonds. Já ta feito

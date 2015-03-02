@@ -13,10 +13,10 @@
     // -> /api/ em produção
  	// -> http://localhost:30954/ em dev
  	//Actualizar no restangular tambem -> app.js
- 	var getURLServer = 'http://localhost:30954/'
+ 	var getURLServer = '/api/'
     // -> 600000 em produção
  	// ->  10000 em dev
- 	var getTimeRefresh = 60000
+ 	var getTimeRefresh = 30000;
 
  	return {
  		getURLServer : getURLServer,

@@ -9,14 +9,19 @@
  */
 angular.module('moneyGraphicsAppApp')
   .controller('GraphicsCtrl', function ($scope, WebApiService, $interval, Restangular, $timeout, $rootScope) {
+    
     $scope.startProcess = function startProcess(data)
 	{
 		$scope.start(data.radialProgress.counterBNA, data.radialProgress.counterEMIS); 
+		
 		$scope.UpdateDonutBNA(data.donutBNA);	
 		$scope.UpdateDonutEMIS(data.donutEMIS);		
 		$scope.UpdateGroupBar(data.barBNA, data.barEMIS);
 
+		
+		$('#ValorTotalDia').text('Plafond: ' + data.radialProgress.totalMoneyBNA + " AOA");
 		$('#ValorSobraDia').text('Resta: ' + data.radialProgress.sobraMoneyBNA + " AOA");
+		$('#ValorTotalDia2').text('Plafond: ' + data.radialProgress.totalMoneyEMIS + " AOA");
 		$('#ValorSobraDia2').text('Resta: ' + data.radialProgress.sobraMoneyEMIS + " AOA");
 	}
 
@@ -28,22 +33,18 @@ angular.module('moneyGraphicsAppApp')
 		var salesDataEMIS = data.donutEMIS;
 		var datasetBNA =  data.barBNA;
 		var datasetEMIS = data.barEMIS;
-		/* Fim dos dados para os graficos */
-
-		/* Inicialização Dados */
-		var maginSalesDonut = 20;
-		var tamanhoParaasImages = 100, heightBNA = 262, heightEMIS = 192;
-
-		var _counterBNA = jsonRadialProgress.counterBNA, _totalMoney = jsonRadialProgress.totalMoneyBNA,
-		_counterEMIS = jsonRadialProgress.counterEMIS, _totalMoneyEMIS = jsonRadialProgress.totalMoneyEMIS, _className = ""; 
 
 		$scope.totalAmountBNA = jsonRadialProgress.totalMoneyBNA;
 		$scope.sobraAmountBNA = jsonRadialProgress.sobraMoneyBNA;
 		$scope.totalAmountEMIS = jsonRadialProgress.totalMoneyEMIS;
 		$scope.sobraAmountEMIS = jsonRadialProgress.sobraMoneyEMIS;
+		/* Fim dos dados para os graficos */
 
+		/* Inicialização Dados */
+		var maginSalesDonut = 20;
+		var tamanhoParaasImages = 100, heightBNA = 262, heightEMIS = 192;
+		var _className = ""; 
 		var _beginDonut1 = 0, _beginDonut2 = 0;
-		var _BNAValue = 0, _EMISValue = 0;
 		/* Fim da Inicialização dos dados */
 
 		/* CSS DIVS dos GRAFICOS*/
@@ -80,38 +81,12 @@ angular.module('moneyGraphicsAppApp')
 		$('#div5').width(insideDivWidth).height(insideDivHeight);
 		$('#div6').width(insideDivWidth).height(insideDivHeight);
 
+		/* Fim das CSS DIVS dos GRAFICOS*/
+
 		/*Codigo do Radial Progress*/
+
 		var svg = d3.select(document.getElementById('div1')).append("svg").attr("width",diameterSalesDonut).attr("height",diameterSalesDonut).attr("id","salesDonut");
 		var svg2 = d3.select(document.getElementById('div4')).append("svg").attr("width",diameterSalesDonut).attr("height",diameterSalesDonut).attr("id","salesDonut2");
-
-		var div1=d3.select(document.getElementById('div1'));
-		var div4=d3.select(document.getElementById('div4'));
-
-		function UpdateMoney(last, money)
-		{
-			var newValue = Math.floor((Math.random() * 5000) + 1);		
-			money = eval(money) - eval(newValue);
-
-			if(last == 1)
-			{	
-				newValue = money;
-				money = 50000;			
-			}	
-			return newValue;
-		}
-
-		function UpdateMoney2(last, money)
-		{
-			var newValue = Math.floor((Math.random() * 5000) + 1);		
-			money = eval(money) - eval(newValue);
-
-			if(last == 1)
-			{	
-				newValue = money;
-				money = 50000;			
-			}	
-			return newValue;
-		}
 
 		function UpdateValue(value)
 		{
@@ -137,14 +112,13 @@ angular.module('moneyGraphicsAppApp')
 			}
 		}
 
-		function UpdateRadial(id, value, className, onClick)
+		function UpdateRadial(id, value, className)
 		{
 			_className = className;
 
 			if(id == "div1")
 			{
 				var rp1 = radialProgress(document.getElementById(id), diameterSalesDonut, diameterSalesDonut, className)
-				.onClick(onClick)
 				.diameter(diameterSalesDonut)
 				.value((100-value)*-1)			
 				.render();							
@@ -152,41 +126,17 @@ angular.module('moneyGraphicsAppApp')
 			else
 			{
 				var rp1 = radialProgress(document.getElementById(id), diameterSalesDonut, diameterSalesDonut, className)
-				.onClick(onClick)
 				.diameter(diameterSalesDonut)
 				.value((100-value)*-1)					
 				.render();							
 			}
 		}
 
-		function onClick1() {
-			_counterBNA = 100;
-			_totalMoney = 1000000;		
-			start(0,0);
-		}
-
-		function onClick2() {
-			_counterEMIS = 100;
-			_totalMoneyEMIS = 1000000;		
-			start(0,0);
-		}
-
-		function labelFunction(val,min,max) {
-
-		}
-
-		function deselect() {
-			div1.attr("class","radial");
-			div4.attr("class","radial");
-		}
-
-
 		function Clean(id)
 		{
 			document.getElementById(id).innerHTML = "";			
 		}
 
-		/*CSS STYLES*/
 		$scope.applyCssStyles = function applyCssStyles()
 		{
 			$(".radial-svg").css('margin-top', maginSalesDonut/2);
@@ -199,14 +149,14 @@ angular.module('moneyGraphicsAppApp')
 			{
 				Clean("div1");
 				UpdateValue(value);
-				UpdateRadial('div1', value, _className, onClick1);
+				UpdateRadial('div1', value, _className);
 			}
 
 			if(value2 >= 0)
 			{
 				Clean("div4");
 				UpdateValue(value2);
-				UpdateRadial('div4', value2, _className, onClick2);
+				UpdateRadial('div4', value2, _className);
 			}
 
 			$scope.applyCssStyles();
@@ -216,47 +166,20 @@ angular.module('moneyGraphicsAppApp')
 
 		/* Inicio Codigo Donut3D */
 
-		var svg3 = d3.select(document.getElementById('div2')).append("svg").attr("width",insideDivWidth).attr("height",insideDivHeight);
-		svg3.append("g").attr("id", "salesDonut")
-
-		var svg4 = d3.select(document.getElementById('div5')).append("svg").attr("width",insideDivWidth).attr("height",insideDivHeight);
-		svg4.append("g").attr("id", "salesDonut2")
-
-		var key = function(d){ return d.data.label; };
-		var key2 = function(d){ return d.data.label; };
-
-		var color = d3.scale.ordinal()
-		.domain(["Basic", "Plus", "amet", "Lite", "Elite", "Delux", "Mega", "Turbo", "Gangsta", "Top", "Lux"])
-		.range(["#3366CC", "#DC3912", "#FF9900", "#109618", "#990099", "#000000", "#A52A2A", "#FF8C00", "#8FBC8F", "#808000"]);
-
-		var color2 = d3.scale.ordinal()
-		.domain(["Basic", "Plus", "amet", "Lite", "Elite", "Delux", "Mega", "Turbo", "Gangsta", "Top", "Lux"])
-		.range(["#3366CC", "#DC3912", "#FF9900", "#109618", "#990099", "#000000", "#A52A2A", "#FF8C00", "#8FBC8F", "#808000"]);
-
 		$scope.UpdateDonutBNA = function UpdateDonutBNA(salesData)
 		{
-			if(_beginDonut1 == 0)
-			{
-				_beginDonut1 = 1;
-				Donut3D.draw("salesDonut", salesData, insideDivWidth/2, insideDivHeight/2, insideDivWidth/3, insideDivHeight/3, insideDivHeight/10, 0.3);
-			}
-			else
-			{	
-				Donut3D.transition("salesDonut", salesData, insideDivWidth/3, insideDivHeight/3, insideDivHeight/10, 0.3);	
-			}	
+			Clean('div2');
+			var svg3 = d3.select(document.getElementById('div2')).append("svg").attr("width",insideDivWidth).attr("height",insideDivHeight);
+			svg3.append("g").attr("id", "salesDonut");
+			Donut3D.draw("salesDonut", salesData, insideDivWidth/2, insideDivHeight/2, insideDivWidth/3, insideDivHeight/3, insideDivHeight/10, 0.3);
 		}
 
 		$scope.UpdateDonutEMIS = function UpdateDonutEMIS(salesData)
 		{
-			if(_beginDonut2 == 0)
-			{
-				_beginDonut2 = 1;		
-				Donut3D.draw("salesDonut2", salesData, insideDivWidth/2, insideDivHeight/2, insideDivWidth/3, insideDivHeight/3, insideDivHeight/10, 0.3);
-			}
-			else
-			{	
-				Donut3D.transition("salesDonut2", salesData, insideDivWidth/3, insideDivHeight/3, insideDivHeight/10, 0.3);	
-			}
+			Clean('div5');
+			var svg4 = d3.select(document.getElementById('div5')).append("svg").attr("width",insideDivWidth).attr("height",insideDivHeight);
+			svg4.append("g").attr("id", "salesDonut2");
+			Donut3D.draw("salesDonut2", salesData, insideDivWidth/2, insideDivHeight/2, insideDivWidth/3, insideDivHeight/3, insideDivHeight/10, 0.3);
 		}
 
 		/* Fim Codigo Donut3D */
@@ -275,58 +198,19 @@ angular.module('moneyGraphicsAppApp')
 		h = insideDivHeight - margin.top - margin.bottom;
 		var padding = 10;
 
-		var colors = [
-		["Bna",  "#20B3D2"]
-		];
+		var colors = [["Bna",  "#20B3D2"]];
+		var colors2 = [["Emi", "#706248"]];
 
-		var colors2 = [
-		["Emi", "#706248"]
-		];
-
-		var xScaleBNA = d3.scale.ordinal()
-		.domain(d3.range(datasetBNA.length))
-		.rangeRoundBands([0, w], 0.05);
-
-		var yScaleBNA = d3.scale.linear()
-		.domain([0, d3.max(datasetBNA, function (d) {
-			return (d.value);
-		})])
-		.range([h, 0]);
+		var xScaleBNA = d3.scale.ordinal().domain(d3.range(datasetBNA.length)).rangeRoundBands([0, w], 0.05);
+		var yScaleBNA = d3.scale.linear().domain([0, d3.max(datasetBNA, function (d) {	return (d.value); })]).range([h, 0]);
 		
-		var xAxisBNA = d3.svg.axis()
-		.scale(xScaleBNA)
-		.tickFormat(function (d) {
-			return datasetBNA[d].day;
-		})
-		.orient("bottom");
+		var xAxisBNA = d3.svg.axis().scale(xScaleBNA).tickFormat(function (d) {	return datasetBNA[d].day;}).orient("bottom");
+		var yAxisBNA = d3.svg.axis().scale(yScaleBNA).orient("left").ticks(5);
+		var xScaleEMIS = d3.scale.ordinal().domain(d3.range(datasetEMIS.length)).rangeRoundBands([0, w], 0.05);
+		var yScaleEMIS = d3.scale.linear().domain([0, d3.max(datasetEMIS, function (d) { return (d.value); })]).range([h, 0]);
 		
-		var yAxisBNA = d3.svg.axis()
-		.scale(yScaleBNA)
-		.orient("left")
-		.ticks(5);
-
-		var xScaleEMIS = d3.scale.ordinal()
-		.domain(d3.range(datasetEMIS.length))
-		.rangeRoundBands([0, w], 0.05);
-
-		var yScaleEMIS = d3.scale.linear()
-		.domain([0, d3.max(datasetEMIS, function (d) {
-			return (d.value);
-		})])
-		.range([h, 0]);
-		
-		var xAxisEMIS = d3.svg.axis()
-		.scale(xScaleEMIS)
-		.tickFormat(function (d) {
-			return datasetEMIS[d].day;
-		})
-		.orient("bottom");
-		
-		var yAxisEMIS = d3.svg.axis()
-		.scale(yScaleEMIS)
-		.orient("left")
-		.ticks(5);
-
+		var xAxisEMIS = d3.svg.axis().scale(xScaleEMIS).tickFormat(function (d) {	return datasetEMIS[d].day;}).orient("bottom");
+		var yAxisEMIS = d3.svg.axis().scale(yScaleEMIS).orient("left").ticks(5);
 		var commaFormat = d3.format(',');
 
 		function RenderGroupedGraphicBNA(dataset)
@@ -483,7 +367,7 @@ angular.module('moneyGraphicsAppApp')
 		$scope.startProcess(data);
 	};
 
-	$interval(
+	$scope.refreshGraphicValues = $interval(
 		function(){ 
 			return Restangular.one('values').get().then(function (data) {
                 $scope.startProcess(data);

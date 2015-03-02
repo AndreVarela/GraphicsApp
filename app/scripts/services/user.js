@@ -33,7 +33,6 @@ angular.module('moneyGraphicsAppApp')
           sessionStorage.setItem('userName', undefined);
           sessionStorage.setItem('role', undefined);
           sessionStorage.setItem('permissions', undefined);
-
           d.resolve(data, status, headers);
         })
         .error(function(data, status, headers){

@@ -55,7 +55,7 @@ angular
     };
 })
   .config(function ($routeProvider, $httpProvider,RestangularProvider) {
-    RestangularProvider.setBaseUrl('http://localhost:30954/');
+    RestangularProvider.setBaseUrl('/api/');
     
     $httpProvider.interceptors.push('myHttpInterceptor');
     $routeProvider
